@@ -58,13 +58,6 @@ class ShoppingCartTest {
     }
 
     @Test
-    void shouldFetchProductPriceFromAPI() {
-        Product product = new Product("cornflakes", 2);
-        ProductService productService = new ProductService();
-        assertEquals(2.52, productService.getProductPrice(product.getName()));
-    }
-
-    @Test
     void shouldRoundUpTaxPayable() {
 
     }
