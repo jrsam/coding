@@ -7,14 +7,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ShoppingCartTest {
 
+
+    ShoppingCart shoppingCart;
+
     @BeforeEach
     void setUp() {
-
+        shoppingCart = new ShoppingCart();
     }
 
     @Test
     void shouldAddProductToCart() {
+        Product product1 = new Product("cornflakes", 2);
+        shoppingCart.addProduct(product);
+        assertEquals(2, shoppingCart.getSize());
 
+        Product product2 = new Product("weetabix", 1);
+        assertEquals(3, shoppingCart.getSize());
     }
 
     @Test
