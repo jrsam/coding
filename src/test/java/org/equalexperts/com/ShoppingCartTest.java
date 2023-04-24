@@ -30,10 +30,10 @@ class ShoppingCartTest {
     void shouldSetPriceToProduct() {
 
         Product product = new Product("cornflakes", 2);
-        assertEquals(2.52 ,product.getPrice());
+        assertEquals(2.52, product.getPrice());
 
         Product product2 = new Product("weetabix", 2);
-        assertEquals(9.98 ,product2.getPrice());
+        assertEquals(9.98, product2.getPrice());
 
     }
 
@@ -59,7 +59,9 @@ class ShoppingCartTest {
 
     @Test
     void shouldFetchProductPriceFromAPI() {
-
+        Product product = new Product("cornflakes", 2);
+        ProductService productService = new ProductService();
+        assertEquals(2.52, productService.getProductPrice(product.getName()));
     }
 
     @Test
