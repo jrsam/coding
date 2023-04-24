@@ -18,10 +18,11 @@ class ShoppingCartTest {
     @Test
     void shouldAddProductToCart() {
         Product product1 = new Product("cornflakes", 2);
-        shoppingCart.addProduct(product);
+        shoppingCart.addProduct(product1);
         assertEquals(2, shoppingCart.getSize());
 
         Product product2 = new Product("weetabix", 1);
+        shoppingCart.addProduct(product2);
         assertEquals(3, shoppingCart.getSize());
     }
 
