@@ -29,6 +29,12 @@ class ShoppingCartTest {
     @Test
     void shouldSetPriceToProduct() {
 
+        Product product = new Product("cornflakes", 2);
+        assertEquals(2.52 ,product.getPrice());
+
+        Product product2 = new Product("weetabix", 2);
+        assertEquals(9.98 ,product2.getPrice());
+
     }
 
     @Test
