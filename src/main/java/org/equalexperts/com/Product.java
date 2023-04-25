@@ -1,5 +1,7 @@
 package org.equalexperts.com;
 
+import org.equalexperts.com.services.ProductService;
+
 public class Product {
 
     String name;
@@ -16,10 +18,14 @@ public class Product {
     }
 
     public double getPrice() {
-        return 0;
+        return this.price;
     }
 
     public String getName() {
         return this.name;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

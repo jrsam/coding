@@ -1,5 +1,6 @@
 package org.equalexperts.com;
 
+import org.equalexperts.com.exceptions.ProductNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,14 +28,15 @@ class ShoppingCartTest {
     }
 
     @Test
-    void shouldSetPriceToProduct() {
+    void shouldSetPriceToProductWhenAddedToCart() {
 
-        Product product = new Product("cornflakes", 2);
-        assertEquals(2.52, product.getPrice());
+        Product product1 = new Product("cornflakes", 2);
+        shoppingCart.addProduct(product1);
+        assertEquals(2.52, product1.getPrice());
 
         Product product2 = new Product("weetabix", 2);
+        shoppingCart.addProduct(product2);
         assertEquals(9.98, product2.getPrice());
-
     }
 
     @Test

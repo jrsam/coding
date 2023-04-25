@@ -18,22 +18,28 @@ public class ProductService {
     HttpClient httpClient = HttpClient.newHttpClient();
     ObjectMapper objectMapper;
 
-    public double getProductPrice(String name) throws IOException, InterruptedException, ProductNotFoundException {
+    public double getProductPrice(String name) throws ProductNotFoundException {
         HttpRequest httpRequest = null;
+        ProductResponse productResponse = null;
         try {
             httpRequest = HttpRequest.newBuilder()
                     .uri(new URI(baseUrl + endPoint + name + ".json"))
                     .build();
+
+
+            HttpResponse httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            if (httpResponse.statusCode() != 200) {
+                throw new ProductNotFoundException("Product " + name + " not found");
+            }
+            objectMapper = new ObjectMapper();
+            productResponse = objectMapper.readValue(httpResponse.body().toString(), ProductResponse.class);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e.getMessage());
         }
-
-        HttpResponse httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        if(httpResponse.statusCode() != 200) {
-            throw new ProductNotFoundException("Product "+name+"not found");
-        }
-        objectMapper = new ObjectMapper();
-        ProductResponse productResponse = objectMapper.readValue(httpResponse.body().toString(), ProductResponse.class);
 
         return productResponse.getPrice();
     }
