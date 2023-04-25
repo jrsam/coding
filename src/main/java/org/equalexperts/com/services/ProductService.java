@@ -1,6 +1,7 @@
 package org.equalexperts.com.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.equalexperts.com.exceptions.ProductNotFoundException;
 import org.equalexperts.com.services.models.ProductResponse;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class ProductService {
     HttpClient httpClient = HttpClient.newHttpClient();
     ObjectMapper objectMapper;
 
-    public double getProductPrice(String name) throws IOException, InterruptedException {
+    public double getProductPrice(String name) throws IOException, InterruptedException, ProductNotFoundException {
         HttpRequest httpRequest = null;
         try {
             httpRequest = HttpRequest.newBuilder()
@@ -28,6 +29,9 @@ public class ProductService {
         }
 
         HttpResponse httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        if(httpResponse.statusCode() != 200) {
+            throw new ProductNotFoundException("Product "+name+"not found");
+        }
         objectMapper = new ObjectMapper();
         ProductResponse productResponse = objectMapper.readValue(httpResponse.body().toString(), ProductResponse.class);
 

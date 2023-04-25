@@ -3,7 +3,7 @@ package org.equalexperts.com;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ShoppingCartTest {
 
@@ -34,11 +34,6 @@ class ShoppingCartTest {
 
         Product product2 = new Product("weetabix", 2);
         assertEquals(9.98, product2.getPrice());
-
-    }
-
-    @Test
-    void handleProductNotPresentFromAPI() {
 
     }
 
