@@ -1,19 +1,25 @@
 package org.equalexperts.com;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.equalexperts.com.exceptions.ProductNotFoundException;
+import org.equalexperts.com.services.ProductService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class ShoppingCartTest {
 
+    @Mock
+    ProductService productService;
 
+    @InjectMocks
     ShoppingCart shoppingCart;
-
-    @BeforeEach
-    void setUp() {
-        shoppingCart = new ShoppingCart();
-    }
 
     @Test
     void shouldAddProductToCart() {
@@ -27,20 +33,21 @@ class ShoppingCartTest {
     }
 
     @Test
-    void shouldSetPriceToProductWhenAddedToCart() {
-
+    void shouldSetPriceToProductWhenAddedToCart() throws ProductNotFoundException {
+        when(productService.getProductPrice(anyString())).thenReturn(2.52);
         Product product1 = new Product("cornflakes", 2);
         shoppingCart.addProduct(product1);
         assertEquals(2.52, product1.getPrice());
 
+        when(productService.getProductPrice(anyString())).thenReturn(9.98);
         Product product2 = new Product("weetabix", 2);
         shoppingCart.addProduct(product2);
         assertEquals(9.98, product2.getPrice());
     }
 
     @Test
-    void shouldUpdateCartStateForEveryProductAdditionToTheCart() {
-
+    void shouldUpdateCartStateForEveryProductAdditionToTheCart() throws ProductNotFoundException {
+        when(productService.getProductPrice(anyString())).thenReturn(2.52);
         Product product1 = new Product("cornflakes", 2);
         shoppingCart.addProduct(product1);
 
@@ -49,6 +56,8 @@ class ShoppingCartTest {
         assertEquals(5.67 ,cartState.getTotalPayable());
         assertEquals(0.63 ,cartState.getTotalTax());
         assertEquals(5.04 ,cartState.getSubTotal());
+
+        when(productService.getProductPrice(anyString())).thenReturn(9.98);
 
         Product product2 = new Product("weetabix", 1);
         shoppingCart.addProduct(product2);
@@ -61,10 +70,13 @@ class ShoppingCartTest {
     }
 
     @Test
-    void shouldIgnoreProductInCartStateWhenPriceNotPresent() {
+    void shouldIgnoreProductInCartStateWhenPriceNotPresent() throws ProductNotFoundException {
+        when(productService.getProductPrice(anyString())).thenReturn(2.52);
+
         Product product1 = new Product("cornflakes", 2);
         shoppingCart.addProduct(product1);
 
+        when(productService.getProductPrice(anyString())).thenThrow(ProductNotFoundException.class);
         Product product2 = new Product("apples", 2);
         shoppingCart.addProduct(product2);
         assertEquals(5.04, shoppingCart.getCartState().getSubTotal());
