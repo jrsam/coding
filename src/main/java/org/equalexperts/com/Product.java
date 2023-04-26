@@ -1,7 +1,5 @@
 package org.equalexperts.com;
 
-import org.equalexperts.com.services.ProductService;
-
 public class Product {
 
     String name;

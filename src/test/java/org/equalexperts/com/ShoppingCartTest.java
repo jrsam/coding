@@ -46,7 +46,7 @@ class ShoppingCartTest {
 
         CartState cartState = shoppingCart.getCartState();
 
-        assertEquals(4.41 ,cartState.getTotalPayable());
+        assertEquals(5.67 ,cartState.getTotalPayable());
         assertEquals(0.63 ,cartState.getTotalTax());
         assertEquals(5.04 ,cartState.getSubTotal());
 
