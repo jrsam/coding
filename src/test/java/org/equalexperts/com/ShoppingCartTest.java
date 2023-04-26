@@ -62,7 +62,12 @@ class ShoppingCartTest {
 
     @Test
     void shouldIgnoreProductInCartStateWhenPriceNotPresent() {
+        Product product1 = new Product("cornflakes", 2);
+        shoppingCart.addProduct(product1);
 
+        Product product2 = new Product("apples", 2);
+        shoppingCart.addProduct(product2);
+        assertEquals(5.04, shoppingCart.getCartState().getSubTotal());
     }
 
     @Test
