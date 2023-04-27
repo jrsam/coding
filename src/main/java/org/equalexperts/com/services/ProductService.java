@@ -11,7 +11,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-
 public class ProductService {
     private final String baseUrl = "https://equalexperts.github.io/";
     private final String endPoint = "backend-take-home-test-data/";

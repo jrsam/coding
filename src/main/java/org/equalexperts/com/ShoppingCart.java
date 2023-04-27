@@ -14,15 +14,14 @@ public class ShoppingCart {
     final double taxRate = 0.125;
 
     void addProduct(Product product) {
-        double price = 0;
         try {
-            price = productService.getProductPrice(product.getName());
+            double price = productService.getProductPrice(product.getName());
             product.setPrice(price);
+            this.productList.add(product);
+            this.updateCart(product);
         } catch (ProductNotFoundException e) {
-            product.setPrice(price);
+            System.out.println(e.getMessage());
         }
-        this.productList.add(product);
-        this.updateCart(product);
     }
 
     private void updateCart(Product product) {
