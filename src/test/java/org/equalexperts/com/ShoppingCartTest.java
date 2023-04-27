@@ -83,6 +83,13 @@ class ShoppingCartTest {
     }
 
     @Test
+    void shouldNotAddProductToCartWhenPriceIsNotPresent() {
+        Product product = new Product("cornflakes", 2);
+        shoppingCart.addProduct(product);
+        assertEquals(0, shoppingCart.getSize());
+    }
+
+    @Test
     void shouldRoundUpTaxPayable() throws ProductNotFoundException {
         when(productService.getProductPrice(anyString())).thenReturn(2.93);
         Product product2 = new Product("apples", 2);
