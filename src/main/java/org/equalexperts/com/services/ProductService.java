@@ -18,13 +18,12 @@ public class ProductService {
     ObjectMapper objectMapper;
 
     public double getProductPrice(String name) throws ProductNotFoundException {
-        HttpRequest httpRequest = null;
-        ProductResponse productResponse = null;
+        HttpRequest httpRequest;
+        ProductResponse productResponse;
         try {
             httpRequest = HttpRequest.newBuilder()
                     .uri(new URI(baseUrl + endPoint + name + ".json"))
                     .build();
-
 
             HttpResponse httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             if (httpResponse.statusCode() != 200) {
@@ -32,11 +31,7 @@ public class ProductService {
             }
             objectMapper = new ObjectMapper();
             productResponse = objectMapper.readValue(httpResponse.body().toString(), ProductResponse.class);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        } catch (InterruptedException e) {
+        } catch (URISyntaxException | IOException | InterruptedException e) {
             throw new RuntimeException(e.getMessage());
         }
 
