@@ -29,7 +29,7 @@ public class ProductService {
     }
 
     public double getProductPrice(String name) throws ProductNotFoundException {
-        ProductResponse productResponse;
+        ProductResponse productResponse = null;
         try {
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .uri(new URI(endPoint + name + ".json"))
@@ -42,7 +42,10 @@ public class ProductService {
             ObjectMapper objectMapper = new ObjectMapper();
             productResponse = objectMapper.readValue(httpResponse.body().toString(), ProductResponse.class);
         } catch (URISyntaxException | IOException | InterruptedException e) {
-            throw new RuntimeException(e.getMessage());
+            System.out.println(e.getMessage());;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
         return productResponse.getPrice();
