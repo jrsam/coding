@@ -23,11 +23,11 @@ class ShoppingCartTest {
 
     @Test
     void shouldAddProductToCart() {
-        CardProduct product1 = new CartProduct("cornflakes", 2);
+        Product product1 = new Product("cornflakes", 2);
         shoppingCart.addProduct(product1);
         assertEquals(2, shoppingCart.getSize());
 
-        CardProduct product2 = new CartProduct("weetabix", 1);
+        Product product2 = new Product("weetabix", 1);
         shoppingCart.addProduct(product2);
         assertEquals(3, shoppingCart.getSize());
     }
@@ -35,12 +35,12 @@ class ShoppingCartTest {
     @Test
     void shouldSetPriceToProductWhenAddedToCart() throws ProductNotFoundException {
         when(productService.getProductPrice(anyString())).thenReturn(2.52);
-        CardProduct product1 = new CartProduct("cornflakes", 2);
+        Product product1 = new Product("cornflakes", 2);
         shoppingCart.addProduct(product1);
         assertEquals(2.52, product1.getPrice());
 
         when(productService.getProductPrice(anyString())).thenReturn(9.98);
-        CardProduct product2 = new CartProduct("weetabix", 2);
+        Product product2 = new Product("weetabix", 2);
         shoppingCart.addProduct(product2);
         assertEquals(9.98, product2.getPrice());
     }
@@ -48,7 +48,7 @@ class ShoppingCartTest {
     @Test
     void shouldUpdateCartStateForEveryProductAdditionToTheCart() throws ProductNotFoundException {
         when(productService.getProductPrice(anyString())).thenReturn(2.52);
-        CardProduct product1 = new CartProduct("cornflakes", 2);
+        Product product1 = new Product("cornflakes", 2);
         shoppingCart.addProduct(product1);
 
         CartState cartState = shoppingCart.getCartState();
@@ -59,7 +59,7 @@ class ShoppingCartTest {
 
         when(productService.getProductPrice(anyString())).thenReturn(9.98);
 
-        CardProduct product2 = new CartProduct("weetabix", 1);
+        Product product2 = new Product("weetabix", 1);
         shoppingCart.addProduct(product2);
 
         cartState = shoppingCart.getCartState();
@@ -73,7 +73,7 @@ class ShoppingCartTest {
     void shouldNotAddProductToCartWhenPriceIsNotPresent() throws ProductNotFoundException {
         when(productService.getProductPrice(anyString())).thenThrow(ProductNotFoundException.class);
 
-        CardProduct product = new CartProduct("pens", 2);
+        Product product = new Product("pens", 2);
         shoppingCart.addProduct(product);
 
         assertEquals(0, shoppingCart.getSize());
@@ -82,7 +82,7 @@ class ShoppingCartTest {
     @Test
     void shouldRoundUpTaxPayable() throws ProductNotFoundException {
         when(productService.getProductPrice(anyString())).thenReturn(2.93);
-        CardProduct product2 = new CartProduct("apples", 2);
+        Product product2 = new Product("apples", 2);
         shoppingCart.addProduct(product2);
         assertEquals(0.73, shoppingCart.getCartState().getTotalTax());
     }
@@ -90,12 +90,12 @@ class ShoppingCartTest {
     @Test
     void shouldRoundUpTotalPayable() throws ProductNotFoundException {
         when(productService.getProductPrice(anyString())).thenReturn(2.93);
-        CardProduct product1 = new CartProduct("apples", 2);
+        Product product1 = new Product("apples", 2);
         shoppingCart.addProduct(product1);
 
         when(productService.getProductPrice(anyString())).thenReturn(4.55);
 
-        CardProduct product2 = new CartProduct("cookies", 2);
+        Product product2 = new Product("cookies", 2);
         shoppingCart.addProduct(product2);
 
         assertEquals(16.83, shoppingCart.getCartState().getTotalPayable());
