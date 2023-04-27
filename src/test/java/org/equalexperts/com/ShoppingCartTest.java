@@ -53,9 +53,9 @@ class ShoppingCartTest {
 
         CartState cartState = shoppingCart.getCartState();
 
-        assertEquals(5.67 ,cartState.getTotalPayable());
-        assertEquals(0.63 ,cartState.getTotalTax());
-        assertEquals(5.04 ,cartState.getSubTotal());
+        assertEquals(5.67, cartState.getTotalPayable());
+        assertEquals(0.63, cartState.getTotalTax());
+        assertEquals(5.04, cartState.getSubTotal());
 
         when(productService.getProductPrice(anyString())).thenReturn(9.98);
 
@@ -64,9 +64,9 @@ class ShoppingCartTest {
 
         cartState = shoppingCart.getCartState();
 
-        assertEquals(16.90 ,cartState.getTotalPayable());
-        assertEquals(1.88 ,cartState.getTotalTax());
-        assertEquals(15.02 ,cartState.getSubTotal());
+        assertEquals(16.90, cartState.getTotalPayable());
+        assertEquals(1.88, cartState.getTotalTax());
+        assertEquals(15.02, cartState.getSubTotal());
     }
 
     @Test
@@ -83,18 +83,25 @@ class ShoppingCartTest {
     }
 
     @Test
-    void shouldUpdateCartStateForEveryProductAddition() {
-
+    void shouldRoundUpTaxPayable() throws ProductNotFoundException {
+        when(productService.getProductPrice(anyString())).thenReturn(2.93);
+        Product product2 = new Product("apples", 2);
+        shoppingCart.addProduct(product2);
+        assertEquals(0.73, shoppingCart.getCartState().getTotalTax());
     }
 
     @Test
-    void shouldRoundUpTaxPayable() {
+    void shouldRoundUpTotalPayable() throws ProductNotFoundException {
+        when(productService.getProductPrice(anyString())).thenReturn(2.93);
+        Product product1 = new Product("apples", 2);
+        shoppingCart.addProduct(product1);
 
-    }
+        when(productService.getProductPrice(anyString())).thenReturn(4.55);
 
-    @Test
-    void shouldRoundUpTotalPayable() {
+        Product product2 = new Product("cookies", 2);
+        shoppingCart.addProduct(product2);
 
+        assertEquals(16.83, shoppingCart.getCartState().getTotalPayable());
     }
 
     @Test
