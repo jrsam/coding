@@ -6,10 +6,6 @@ import org.equalexperts.com.services.ProductService;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * TODO: Make ShoppingCart Singleton
- */
 public class ShoppingCart {
 
     List<Product> productList = new ArrayList<>();
