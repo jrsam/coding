@@ -8,12 +8,12 @@ import java.util.List;
 
 public class ShoppingCart {
 
-    List<Product> productList = new ArrayList<>();
+    List<CartProduct> productList = new ArrayList<>();
     ProductService productService = new ProductService();
     CartState cartState = new CartState();
     final double taxRate = 0.125;
 
-    void addProduct(Product product) {
+    void addProduct(CartProduct product) {
         try {
             double price = productService.getProductPrice(product.getName());
             product.setPrice(price);
@@ -24,7 +24,7 @@ public class ShoppingCart {
         }
     }
 
-    private void updateCart(Product product) {
+    private void updateCart(CartProduct product) {
 
         if (this.productList.isEmpty()) {
             this.cartState.setSubTotal(product.getQuantity() * product.getPrice());
