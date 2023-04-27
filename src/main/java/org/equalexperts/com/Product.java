@@ -1,12 +1,18 @@
 package org.equalexperts.com;
 
-abstract class Product {
+public class Product {
 
     String name;
+    int quantity;
     double price;
 
-    public Product(String name) {
+    public Product(String name, int quantity) {
         this.name = name;
+        this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return this.quantity;
     }
 
     public double getPrice() {
