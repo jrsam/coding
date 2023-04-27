@@ -104,19 +104,4 @@ class ShoppingCartTest {
         assertEquals(16.83, shoppingCart.getCartState().getTotalPayable());
     }
 
-    @Test
-    void shouldCalculateTotalPayable() {
-
-    }
-
-    @Test
-    void shouldCalculateTaxPayable() {
-
-    }
-
-    @Test
-    void shouldCalculateCartSubtotal() {
-
-    }
-
 }
