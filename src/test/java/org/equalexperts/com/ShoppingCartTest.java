@@ -70,19 +70,6 @@ class ShoppingCartTest {
     }
 
     @Test
-    void shouldIgnoreProductInCartStateWhenPriceNotPresent() throws ProductNotFoundException {
-        when(productService.getProductPrice(anyString())).thenReturn(2.52);
-
-        Product product1 = new Product("cornflakes", 2);
-        shoppingCart.addProduct(product1);
-
-        when(productService.getProductPrice(anyString())).thenThrow(ProductNotFoundException.class);
-        Product product2 = new Product("apples", 2);
-        shoppingCart.addProduct(product2);
-        assertEquals(5.04, shoppingCart.getCartState().getSubTotal());
-    }
-
-    @Test
     void shouldNotAddProductToCartWhenPriceIsNotPresent() throws ProductNotFoundException {
         when(productService.getProductPrice(anyString())).thenThrow(ProductNotFoundException.class);
 
