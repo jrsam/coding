@@ -9,7 +9,7 @@ import java.util.List;
 public class ShoppingCart {
 
     List<Product> productList = new ArrayList<>();
-    ProductService productService = new ProductService();
+    ProductService productService = ProductService.getInstance();
     CartState cartState = new CartState();
     final double taxRate = 0.125;
 

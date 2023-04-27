@@ -12,8 +12,21 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class ProductService {
-    private final String endPoint = "https://equalexperts.github.io/backend-take-home-test-data/";
+    private static ProductService singletonInstance;
+
+    private final String endPoint = "https://equalexperts.github.io/backend-take-home-test-data/"; //move to constants
     HttpClient httpClient = HttpClient.newHttpClient();
+
+    private ProductService() {
+
+    }
+
+    public static ProductService getInstance() {
+        if(singletonInstance == null)
+            singletonInstance = new ProductService();
+        return singletonInstance;
+
+    }
 
     public double getProductPrice(String name) throws ProductNotFoundException {
         ProductResponse productResponse;
